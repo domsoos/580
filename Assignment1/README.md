@@ -57,14 +57,15 @@ down
 Time taken:  0.4244070053100586  
   
   
-** Breadth-First Search
-** Sample Input  
+## Breadth-First Search
+### Sample Input  
+  
 The user can specify the initial state of the puzzle and the max depth level to search at by command line arguments.  
 `python3 breadth-first.py "15 14 13 12 11 -1 9 8 7 10 6 5 3 2 1 4" 25`  
 or the user can also run it directly as follows:  
 `python3 breadth-first.py`  
 
-*** Sample Output  
+### Sample Output  
 Solution found at depth:  4
 [15, 14, 13, 12]  
 [11, -1, 9, 8]  
