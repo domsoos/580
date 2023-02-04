@@ -1,5 +1,6 @@
 import time, sys
 from pprint import pprint
+from copy import deepcopy
 
 
 # Node class to represent states
@@ -7,91 +8,138 @@ class Node(object):
 	"""docstring for Node"""
 	def __init__(self, state, parent=None, action=None):
 		super(Node, self).__init__()
-		self.state = state # represent each state as an array in range 0-8, len 9
+		self.state = state # represent each state as an array in range 0-15, len 16
 		self.parent = parent
 		self.action = action
-		self.empty = state.index(-1)
+		self.empty = state.index(-1) # store the empty spot
+
+	def isValid(self, index, action):
+		if index in [3,7,11,15] and action == "right": # if empty slot is in far right column, cannot right
+			return False
+		elif index in [0,1,2,3] and action == "up": # if the empty slot is in top row, cannot move up
+			return False
+		elif index in [0,4,8,12] and action == "left": # if the empty slot is far left column, cannot move left
+			return False
+		elif index in [12,13,14,15] and action == "down": # if the empty slot is bottom row, cannot move down
+			return False
+		else:	# otherwise the move is valid
+			return True
+
+	def isMoveBack(self, action):# function to check if the action we are about to take it is not the reverse, 
+		if self.parent:
+			if (self.parent.action == "left" and action == "right") or (self.parent.action == "right" and action == "left") or (self.parent.action == "up" and action == "down") or (self.parent.action == "down" and action == "up"):
+				return True
+			else:
+				return False
 
 	# neighbor function to generate possible leaves
 	def getNeighbor(self):
 		neighbors = []
-		actions = {"up": -3, "down": 3, "left": -1, "right": 1}
+		actions = {"up": -4, "down": 4, "left": -1, "right": 1} # states are stored as a 1D array, up move would result in an index -4 etc..
 		for action, index in actions.items():
-			newIndex =  self.empty + index
-			if 0 <= newIndex < 9:
-				new_state = self.state.copy()
-				temp = new_state[self.empty]
-				new_state[self.empty] = new_state[newIndex]
-				new_state[newIndex] = temp
+			if self.isValid(self.empty, action) and 0 <= self.empty + index < 16 and not self.isMoveBack(action): # we check if the move is valid at all, but also not a move back to the previous state
+				newIndex =  self.empty + index
+				new_state = deepcopy(self.state)
+				temp = new_state[self.empty] # temporary variable for to keep empty slot
+				new_state[self.empty] = new_state[newIndex] # place the empty slot into the new index
+				new_state[newIndex] = temp #
 				neighbor = Node(new_state, self, action)
 				neighbors.append(neighbor)
 		return neighbors
 
-
 # each node has to store its own parents so that we can create a path
 
+###  Helper function to calculate the depth   ###
+def calculateDepth(node):
+    depth = 0
+    while node.parent:
+        depth += 1
+        node = node.parent
+    return depth
 
-def depth_first(initialState, goalState):
-	start = time.time()
-	fringe = [Node(initialState)]
-	visited = set(initialState)
+### Depth-First Search Function to find the solution by expanded the left-most node in the graph ###
+def depthFirst(initialState, goalState, depth_limit=50):
+    start = time.time()
+    fringe = [Node(initialState)]
+    visited = set(initialState)
 
-	while fringe:
-		currentNode = fringe.pop() # remove the last node from our open list
-		currentState = currentNode.state
-		#print_path(currentNode)
-		if currentState == goalState:
-			print("Solution found")
-			print_path(currentNode)
-			print("Time taken: ", time.time() - start)
-			return currentNode
-		visited.add(str(currentState))
-		for neighbor in currentNode.getNeighbor():
-			if str(neighbor.state) not in visited:
-				fringe.append(neighbor)
+    while fringe:
+        currentNode = fringe.pop() # get the last element that just go appended there 
+        currentState = currentNode.state
+        string = str(currentState)
+        if string in visited:
+            continue
+        if currentState == goalState:
+            print(f"Solution found at depth: {calculateDepth(currentNode)}")
+            printPath(currentNode)
+            print("Time taken: ", time.time() - start)
+            return currentNode
+        visited.add(str(currentState))
+        current_depth = calculateDepth(currentNode)
+        if current_depth >= depth_limit:
+            continue
+        for neighbor in currentNode.getNeighbor():
+            if str(neighbor.state) not in visited:
+                fringe.append(neighbor)
+    print("No solution found at the given depth: ", depth_limit)
 
 
-def print_path(node):
+### Function to print the state of a node   ###
+def printState(node):
+    print(node.state[:4])
+    print(node.state[4:8])
+    print(node.state[8:12])
+    print(node.state[12:])
+    print(node.action)
+    print()
+
+### Function to print the path of the node by traversing the parents and then printing out the reverse path starting with initial  ###
+def printPath(node):
     path = []
     while node:
         path.append((node.state, node.action))
         node = node.parent
     for state, move in path[::-1]:
-        print(state[:3])
-        print(state[3:6])
-        print(state[6:])
+        print(state[:4])
+        print(state[4:8])
+        print(state[8:12])
+        print(state[12:])
         print(move)
         print()
         print()
 
 
-initialState = [
-	8,2,-1,
-	3,4,7,
-	5,1,6
+initial = [
+15, 14, 13, 12,
+-1, 11, 10, 8,
+7, 6, 9, 5,
+3, 2, 1, 4
+]
+
+initialS = [
+11, 5, 2, 1,
+14, 8, 10,-1,
+15, 4, 13, 6,
+9, 12, 3, 7,
 ]
 
 goalState = [
-	1,2,3,
-	4,5,6,
-	7,8,-1
+15, 14, 13, 12,
+11, 10, 9, 8,
+7, 6, 5, 4,
+3, 2, 1, -1
 ]
 
 
-def get_input_array():
-	valid = False
-	input_string = sys.argv[1]
-	input_list = input_string.split() # split the string into a list of strings
-	while not valid:
-		input_array = [int(i) for i in input_list] # convert the list of strings into a list of integers
-		if -1 not in input_array:
-			print("Wrong input")
-			valid = False
-		else:
-			valid = True
-	return input_array
-
-
 if __name__ == '__main__':
-	#initialState = get_input_array()
-	depth_first(initialState, goalState)
+	if len(sys.argv)>1:
+		initialState = [int(i) for i in sys.argv[1].split()]
+		if len(sys.argv)>2:
+			maxDepth = int(sys.argv[2])
+		else:
+			maxDepth = 50
+	else:
+		maxDepth = 50
+		initialState = initial
+
+	depthFirst(initialState, goalState, maxDepth)
