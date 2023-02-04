@@ -19,44 +19,44 @@ or the user can also run it directly as follows:
 ### Sample Output:
 
 Solution found at depth: 4
-[15, 14, 13, 12]
-[11, -1, 9, 8]
-[7, 10, 6, 5]
-[3, 2, 1, 4]
-None
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, -1, 6, 5]
-[3, 2, 1, 4]
-down
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, -1, 5]
-[3, 2, 1, 4]
-right
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, 5, -1]
-[3, 2, 1, 4]
-right
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, 5, 4]
-[3, 2, 1, -1]
-down
-
-
-Time taken:  0.4244070053100586
-
-
+[15, 14, 13, 12]  
+[11, -1, 9, 8]  
+[7, 10, 6, 5]  
+[3, 2, 1, 4]  
+None  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, -1, 6, 5]  
+[3, 2, 1, 4]  
+down  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, 6, -1, 5]  
+[3, 2, 1, 4]  
+right  
+  
+  
+[15, 14, 13, 12]   
+[11, 10, 9, 8]  
+[7, 6, 5, -1]  
+[3, 2, 1, 4]  
+right  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, 6, 5, 4]  
+[3, 2, 1, -1]  
+down  
+  
+  
+Time taken:  0.4244070053100586  
+  
+  
 ** Breadth-First Search
 ** Sample Input  
 The user can specify the initial state of the puzzle and the max depth level to search at by command line arguments.  
@@ -66,52 +66,52 @@ or the user can also run it directly as follows:
 
 *** Sample Output  
 Solution found at depth:  4
-[15, 14, 13, 12]
-[11, -1, 9, 8]
-[7, 10, 6, 5]
-[3, 2, 1, 4]
-None
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, -1, 6, 5]
-[3, 2, 1, 4]
-down
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, -1, 5]
-[3, 2, 1, 4]
-right
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, 5, -1]
-[3, 2, 1, 4]
-right
-
-
-[15, 14, 13, 12]
-[11, 10, 9, 8]
-[7, 6, 5, 4]
-[3, 2, 1, -1]
-down
-
-
-Time taken:  0.0018229484558105469
-
-
-** Analysis  
+[15, 14, 13, 12]  
+[11, -1, 9, 8]  
+[7, 10, 6, 5]  
+[3, 2, 1, 4]  
+None  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, -1, 6, 5]  
+[3, 2, 1, 4]  
+down  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, 6, -1, 5]  
+[3, 2, 1, 4]  
+right  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, 6, 5, -1]  
+[3, 2, 1, 4]  
+right  
+  
+  
+[15, 14, 13, 12]  
+[11, 10, 9, 8]  
+[7, 6, 5, 4]  
+[3, 2, 1, -1]  
+down  
+  
+  
+Time taken:  0.0018229484558105469  
+  
+  
+## Analysis  
 In this case, Breadth-First Search found the same solution faster but in theory Depth-First Search is faster.
 
 DFS may be faster in terms of time complexity since it uses a stack data structure to keep track of the visited nodes.  It may be able to find the solution faster, but the algorithm can become slow or infinite if the search tree has many branches. 
 
 BFS on the other hand should have a slower time complexity, but it has the advantage of finding the optimal solution. BFS use a queue data structure to keep track of the visited nodes, which ensures that each nodes is visited on a given depth. A depth limit argument can also be specified to run this program.
 
-*** What to do
+### What to do
 Including a depth limit for DFS can make the search faster, but it may not find the solution if the solution is outside of the depth limit in the graph.  
 To improve the performance of BFS, bidirectional breadth-first search may speed up the algorithm by simultanously searching from both initial node and goal node and stopping when they meet in the middle. 
 
