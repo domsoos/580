@@ -18,7 +18,7 @@ or the user can also run it directly as follows:
 
 ### Sample Output:
 
-Solution found at depth: 4
+Solution found at depth: 4  
 [15, 14, 13, 12]  
 [11, -1, 9, 8]  
 [7, 10, 6, 5]  
@@ -66,7 +66,7 @@ or the user can also run it directly as follows:
 `python3 breadth-first.py`  
 
 ### Sample Output  
-Solution found at depth:  4
+Solution found at depth:  4  
 [15, 14, 13, 12]  
 [11, -1, 9, 8]  
 [7, 10, 6, 5]  
