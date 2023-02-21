@@ -29,9 +29,9 @@ To evaluate the informed search algorithm using different heuristics, the follow
 
 | Heuristic | NOT IsMoveBack | IsMoveBack | Improvement |  
 | --------  | -------- | -------- |  
-| 1) | 0.0049 |  | 0.0031 | 36.73% |  
+| 1) | 0.0049 | 0.0031 | 36.73% |  
 | 2) | 0.0021 | 0.0019 | 9.52% |  
-| 3) | **80.23**  | **0.789** | 99.02% |  
+| 3) | **80.23** | **0.789** | 99.02% |  
 | 4) | 0.026  | 0.00167 | 93.57% |  
 Table 1. Time taken by each heuristic function to find the goal state with and without my isMoveBack heuristic function
 
