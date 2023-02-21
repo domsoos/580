@@ -27,7 +27,7 @@ To evaluate the informed search algorithm using different heuristics, the follow
 [6, 11, 1, 9]  
 [7, 3, 2, 4]  
 
-| Heuristic | Without IsMoveBack() | IsMoveBack() | Improvement |  
+| Heuristic | Without IsMoveBack() | IsMoveBack() | Time Reduction |  
 | --------  | -------- | -------- | --------|
 | 1) Number of misplaced tiles | 0.0049 sec | 0.0031 sec | 36.73% |  
 | 2) The Manhattan Distance  | 0.0021 sec | 0.0019 sec | 9.52% |  
@@ -36,8 +36,8 @@ To evaluate the informed search algorithm using different heuristics, the follow
 
 Table 1. Time taken by each heuristic function to find the goal state with and without my isMoveBack heuristic function
 
-To calculate the improvement, I used the following formula:  
-`((Without IsMoveBack  - IsMoveBack) / Without IsMoveBack ) * 100 = improvement in percent`
+To calculate the time reduction in percent, I used the following formula:  
+`((Without IsMoveBack  - IsMoveBack) / Without IsMoveBack ) * 100 = Time Reduction in percent`
 
 
 By incorporating the optimization to check if the next move is a move back, the time taken to execute the direct adjacent tile reversal heuristic was reduced by a factor of approximately 99.02%, from 80.23 seconds to 0.789 seconds. This optimization had a significant impact on the overall search performance of the algorithm, allowing it to quickly find the optimal solution. 
@@ -52,14 +52,14 @@ I also experimented with the number of direct adjacent tile reversals present he
 ## Input
 The user does no have to specify anything to run the program, but they have the option to initialize the starting state and the user can choose from heuristic settings from `h1` to `h4` as a command line argument.
 
-The initial state and heuristic arguments have to be inside quotation marks separated by spaces.
+If specified, initial state and heuristic arguments have to be inside quotation marks separated by spaces for it to work. Heuristic arguments can be specified individually.
+
 ### Sample Inputs:
 `python3 informed.py`  
 or  
 `python3 informed.py "14 13 12 8 15 -1 10 5 6 11 1 9 7 3 2 4" "h1 h2 h3 h4"`
 
-
-Note that if no initial state was given by the user, the program will use an initial state that has the solution at 26 level deep.  
+Note: if no initial state and heuristic was given by the user, the program will use a default initial state that has the solution at 26-level deep using all 4 heuristic functions.  
 
 ## Output Results
 
