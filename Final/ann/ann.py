@@ -9,58 +9,36 @@ import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-# Load the diabetes dataset
+# load the diabetes dataset
 diabetes_df = pd.read_csv('diabetes-1.csv')
 
-# Separate the features and target
+# separate the features and target
 X = diabetes_df.drop('Class', axis=1)
 y = diabetes_df['Class']
 
-# Scale the input features
+# scale the input features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Split the data into training, validation, and testing sets
+# split the data into training, validation, and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.25, random_state=42)
 X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.15, random_state=42)
 
 #print(f"training data points: {len(y_train)}\nvalidation data points: {len(y_val)}\ntesting data points: {len(y_test)}")
 
-
-# ANN model
+# ANN models
 """
 model = Sequential([
     Dense(32, activation='relu', input_shape=(X_train.shape[1],)),
     Dense(16, activation='relu'),
-    tf.keras.layers.Dropout(0.2),
-    Dense(8, activation='relu'),
     Dense(1, activation='sigmoid')
 ])
-
-# Compile the model
-model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.0005), loss='binary_crossentropy', metrics=['accuracy'])
-
-# Train the model
-model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200, batch_size=32, verbose=0)
-
-
-
-
-model = Sequential([
-    Dense(32, activation='relu', input_shape=(X_train.shape[1],)),
-    Dense(16, activation='relu'),
-    Dense(1, activation='sigmoid')
-])
-
-# Compile the model
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-
-# Train the model
 model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=200, batch_size=32, verbose=0)
 
 """
 
-# Improved ANN model
+# improved ANN model
 model = Sequential([
     Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
     Dense(32, activation='relu'),
@@ -69,15 +47,15 @@ model = Sequential([
     Dense(1, activation='sigmoid')
 ])
 
-# Compile the model
+# compile and train the model
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.000085), loss='binary_crossentropy', metrics=['accuracy'])
-
-# Train the model
 model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=100, batch_size=32, verbose=0)
 
 
+"""
 # Train the model and store the history
 history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=100, batch_size=32, verbose=0)
+
 
 # Plot the training and validation loss
 plt.figure(figsize=(12, 4))
@@ -99,19 +77,20 @@ plt.legend()
 plt.title('Accuracy vs. Epoch')
 
 plt.show()
+"""
 
-
-# Make predictions
+# make predictions
 predictions = model.predict(X_test)
 predictions = (predictions > 0.5).astype(int).flatten()
 
-# Generate the classification report
+# generate the classification report
 report = classification_report(y_test, predictions, output_dict=True)
 #print("Evaluation on Testing Data")
 #print(report)
 
 print(f"\nArtificial Neural Network: \nPrecision: {round(report['weighted avg']['precision'], 2)} \nRecall: {round(report['weighted avg']['recall'],2)}\nF1-score: {round(report['weighted avg']['f1-score'],2)}\n")
 
+"""
 # Convert the classification report to a DataFrame
 report_df = pd.DataFrame(report).transpose()
 
@@ -125,3 +104,4 @@ plt.title('Artificial Neural Network Classification Report Heatmap')
 plt.xlabel('Metrics')
 plt.ylabel('Classes')
 plt.show()
+"""

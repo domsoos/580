@@ -9,19 +9,9 @@ from sklearn.metrics import classification_report
 
 from sklearn.preprocessing import StandardScaler
 
-# Get the current working directory
-current_directory = os.getcwd()
-
-# Check if the CSV file exists in the current working directory
-csv_file_path = os.path.join(current_directory, 'diabetes-1.csv')
-if not os.path.exists(csv_file_path):
-    # Move up one directory (to the parent directory)
-    parent_directory = os.path.dirname(current_directory)
-    os.chdir(parent_directory)
-    print("Moved to parent directory:", os.getcwd())
-
-# Load the dataset
+# load the dataset
 diabetes_df = pd.read_csv('./diabetes-1.csv')
+
 # separate features and target
 X = diabetes_df.drop('Class', axis=1)
 y = diabetes_df['Class']
@@ -46,21 +36,18 @@ score = model.score(X_val, y_val)
 # make predictions
 predictions = model.predict(X_test)
 report = (classification_report(y_test, predictions, output_dict=True))
-#print("Evaluation on Testing Data")
-#print(report)
 print(f"Support Vector Machine: \nPrecision: {round(report['weighted avg']['precision'], 2)} \nRecall: {round(report['weighted avg']['recall'],2)}\nF1-score: {round(report['weighted avg']['f1-score'],2)}\n\n")
 
 
-# Convert the classification report to a DataFrame
+"""# convert the classification report to a DataFrame
 report_df = pd.DataFrame(report).transpose()
-
-# Remove the 'support' column
+# remove the 'support' column
 report_df = report_df.drop('support', axis=1)
 
-# Plot the heatmap using seaborn
+# plot the heatmap using seaborn
 plt.figure(figsize=(10, 6))
 sns.heatmap(report_df, annot=True, cmap='coolwarm', cbar=False, fmt='.2f')
 plt.title('Support Vector Machine Classification Report Heatmap')
 plt.xlabel('Metrics')
 plt.ylabel('Classes')
-plt.show()
+plt.show()"""
