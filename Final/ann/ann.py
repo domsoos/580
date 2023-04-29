@@ -49,7 +49,7 @@ model = Sequential([
 
 # compile and train the model
 model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.000085), loss='binary_crossentropy', metrics=['accuracy'])
-model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=100, batch_size=32, verbose=0)
+model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=100, batch_size=32, verbose=1)
 
 
 """
