@@ -1,6 +1,8 @@
 
+## Machine Learning
+  
 ### The code and preprocessing
-The shell script can execute all three classifiers, just have to give it permission to execute.
+The dataset diabetes-1.csv was provided. The shell script can execute all three classifiers, just have to give it permission to execute:
 
 ```bash
 chmod +x run.sh
